@@ -31,6 +31,8 @@ The project uses a `Makefile` for building and testing. The following are the ma
 
 The compiler flags are set in the `CFLAGS` and `CXXFLAGS` variables in the `Makefile`. The project uses `llvm-config` to determine the correct flags for the system.
 
+**Note:** This project requires LLVM to be installed.
+
 ## Coding Style
 
 The coding style is standard C99. Please adhere to the following conventions:
