@@ -1,0 +1,113 @@
+{
+  "name": "@fireproof/monorepo",
+  "version": "0.0.0-smoke",
+  "private": true,
+  "description": "Live ledger for the web",
+  "type": "module",
+  "files": [],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "prepack": "core-cli build --prepare-version",
+    "pack": "echo do nothing",
+    "build:all": "pnpm run '/build:/' && pnpm run '/pub:/'",
+    "build": "core-cli tsc",
+    "build:tsup": "tsup",
+    "build:docs": "if [ \"$FP_CI\" = 'fp_ci' ] ; then bash build-docs.sh; fi",
+    "presmoke": "sh smoke/publish-local-registry.sh",
+    "smoke": "pnpm run '/^smoke:/'",
+    "smoke-retry": "pnpm run '/^smoke:/'",
+    "smoke:esm": "sh smoke/esm/it.sh",
+    "smoke:node": "sh smoke/npm/it.sh",
+    "smoke:react": "sh smoke/react/it.sh",
+    "clean": "rm -rf node_modules dist",
+    "env": "env",
+    "dev": "pnpm run '/^dev:/'",
+    "dev:3rd-party": "cd cloud/3rd-party && pnpm run dev",
+    "dev:todo-app": "npx vite -c vite.config.ts cloud/todo-app --port 3002",
+    "dev:cf-d1": "wrangler dev -c cloud/backend/cf-d1/wrangler.toml --env dev",
+    "test": "vitest --run",
+    "test:file": "vitest --config vitest.file.config.ts --run",
+    "test:indexeddb": "vitest --config vitest.indexeddb.config.ts --run",
+    "test:deno": "deno run --quiet --allow-net --allow-write --allow-run  --allow-sys --allow-ffi  --allow-read --allow-env  ./node_modules/vitest/vitest.mjs --run --project core:file",
+    "format": "prettier .",
+    "check": "pnpm format --write --log-level silent && pnpm lint --quiet && pnpm test && pnpm build",
+    "lint": "eslint",
+    "drizzle:libsql": "drizzle-kit push --config ./cloud/backend/node/drizzle.cloud.libsql.config.ts",
+    "drizzle:d1-local": "drizzle-kit push --config ./cloud/backend/cf-d1/drizzle.cloud.d1-local.config.ts",
+    "drizzle:d1-remote": "drizzle-kit push --config ./cloud/backend/cf-d1/drizzle.cloud.d1-remote.config.ts",
+    "wrangler:cf-d1": "wrangler deploy -c cloud/backend/cf-d1/wrangler.toml --env dev",
+    "prepublish": "core-cli build --prepare-version",
+    "publish": "pnpm run -r publish"
+  },
+  "keywords": [
+    "ledger",
+    "database",
+    "JSON",
+    "immutable",
+    "IPLD",
+    "CID",
+    "UCAN"
+  ],
+  "contributors": [
+    "J Chris Anderson",
+    "Alan Shaw",
+    "Travis Vachon",
+    "Mikeal Rogers",
+    "Meno Abels"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@fireproof/core-cli": "workspace:0.0.0",
+    "@types/deno": "^2.3.0",
+    "@types/node": "^24.1.0",
+    "@typescript/native-preview": "7.0.0-dev.20250804.1",
+    "deno": "^2.4.3",
+    "drizzle-kit": "0.30.6",
+    "eslint": "^9.33.0",
+    "eslint-plugin-import": "^2.32.0",
+    "multiformats": "^13.4.0",
+    "playwright": "^1.54.2",
+    "playwright-chromium": "^1.54.2",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.39.0",
+    "vitest": "^3.2.4",
+    "wrangler": "^4.29.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fireproof-storage/fireproof.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fireproof-storage/fireproof/issues"
+  },
+  "homepage": "https://github.com/fireproof-storage/fireproof#readme",
+  "bundle-phobia": {
+    "max-size": "390kB",
+    "max-gzip-size": "110kB",
+    "max-overall-size": "1MB"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@clerk/shared",
+      "core-js",
+      "deno",
+      "edgedriver",
+      "esbuild",
+      "msw",
+      "playwright-chromium",
+      "sharp",
+      "workerd"
+    ],
+    "patchedDependencies": {
+      "drizzle-kit": "patches/drizzle-kit.patch"
+    }
+  },
+  "dependencies": {
+    "@adviser/cement": "^0.4.23",
+    "@fireproof/vendor": "workspace:0.0.0"
+  }
+}

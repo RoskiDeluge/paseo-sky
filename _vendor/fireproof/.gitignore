@@ -1,0 +1,42 @@
+# Files
+.vscode
+.idea
+.DS_Store
+.eslintcache
+pail.car
+
+# Directories
+.nyc_output
+build
+coverage
+**/node_modules/**
+out
+logs
+
+*.d.ts.map
+*.js.map
+
+# Artifacts
+*.log
+**/*.tgz
+*.zip
+*.tgz
+
+smoke/package.json
+smoke/pnpm-lock.yaml
+smoke/react/package.json
+smoke/react/pnpm-lock.yaml
+**/__screenshots__/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+**/.env
+**/dist/**
+**/.esm-cache/**
+**/.cache/**
+**/.vite/**
+
+**/.dev.*
+**/.env.*
+.wrangler
