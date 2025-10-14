@@ -1,0 +1,5 @@
+# build and scratch
+lab/.cache/
+lab/dist/
+lab/tmp/
+
